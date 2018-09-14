@@ -36,9 +36,7 @@ func LeaderElection(c *client.Client, groupIdentifier string, onBecameLeader Bec
 	); err != nil {
 		return err
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
-	defer cancel()
-	if res, err := c.Call(ctx, fmt.Sprintf("ee.leader.%s", groupIdentifier), nil, nil, nil, ""); err != nil {
+	if res, err := c.Call(context.Background(), fmt.Sprintf("ee.leader.%s", groupIdentifier), nil, nil, nil, ""); err != nil {
 		return err
 	} else if len(res.Arguments) == 0 {
 		return errors.New("leader returned nothing")
@@ -59,7 +57,7 @@ func LeaderElection(c *client.Client, groupIdentifier string, onBecameLeader Bec
 			}
 			if id, ok := wamp.AsID(args[0]); !ok || id != activeSession {
 				return
-			} else if res, err := c.Call(ctx, fmt.Sprintf("ee.leader.%s", groupIdentifier), nil, nil, nil, ""); err != nil {
+			} else if res, err := c.Call(context.Background(), fmt.Sprintf("ee.leader.%s", groupIdentifier), nil, nil, nil, ""); err != nil {
 				return
 			} else if len(res.Arguments) == 0 {
 				return
