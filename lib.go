@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"github.com/gammazero/nexus/client"
 	"github.com/gammazero/nexus/wamp"
